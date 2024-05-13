@@ -1,0 +1,45 @@
+version: "3"
+
+services:
+    web:
+      image: codeberg.org/forgejo/forgejo:1.18.5-0
+      container_name: forgejo
+      volumes:
+        - ${DATA_DIR}:/data
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+      networks:
+        - proxy
+      ports:
+        - 3000:3000
+        - 2222:22
+      depends_on:
+        - db
+      restart: unless-stopped
+      environment:
+        - USER_UID=1000
+        - USER_GID=100
+        - DB_TYPE=postgres
+        - DB_HOST=db:5432
+        - DB_NAME=forgejo
+        - DB_USER=git-adm
+        - DB_PASSWD=
+        - SSH_LISTEN_PORT=22
+        - SSH_PORT=2222
+        - SSH_DOMAIN=
+        - ROOT_URL=
+
+    db:
+      image: postgres:13.1
+      restart: unless-stopped
+      networks:
+        - proxy
+      environment:
+        - POSTGRES_USER=git-adm
+        - POSTGRES_PASSWORD=
+        - POSTGRES_DB=forgejo
+      volumes:
+        - ${POST_DIR}:/var/lib/postgresql/data
+networks:
+  proxy:
+    external: true

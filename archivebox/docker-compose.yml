@@ -1,0 +1,28 @@
+version: '2.4'
+
+services:
+    archivebox:
+        # build: .                              # for developers working on archivebox
+        image: archivebox/archivebox:latest
+        command: server --quick-init 0.0.0.0:8000
+        container_name: archivebox
+        ports:
+            - 8001:8000
+        environment:
+            - ALLOWED_HOSTS=*                   # add any config options you want as env vars
+            - MEDIA_MAX_SIZE=3000m
+        volumes:
+            - ${DATA_DIR}:/data
+
+          #labels:
+          #- "traefik.enable=true"
+          #- "traefik.http.routers.archivebox.entrypoints=https"
+          #- "traefik.http.routers.archivebox.rule=Host(``)"
+          #- "traefik.http.routers.archivebox.tls=true"
+          #- "traefik.http.routers.archivebox.tls.certresolver=cloudflare"
+
+networks:
+  default:
+    name: proxy
+    external: true
+

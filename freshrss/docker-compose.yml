@@ -1,0 +1,27 @@
+---
+version: "2.1"
+services:
+  freshrss:
+    image: lscr.io/linuxserver/freshrss
+    container_name: freshrss
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /../../freshrss/config:/config
+    networks:
+      - proxy
+    ports:
+      - 8088:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.freshrss.entrypoints=https"
+      - "traefik.http.routers.freshrss.rule=Host(``)"
+      - "traefik.http.routers.freshrss.tls=true"
+      - "traefik.http.routers.freshrss.tls.certresolver=cloudflare"
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  app:
+    image: ghcr.io/go-shiori/shiori
+    container_name: shiori
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    environment:
+      TZ: 'Europe/London'
+    volumes:
+      - /../../shiori/data/:/srv/shiori

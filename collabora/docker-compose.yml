@@ -1,0 +1,16 @@
+version: "3.4"
+services:
+  collabora:
+    container_name: collabora
+    image: collabora/code:latest
+    cap_add:
+      - MKNOD
+    environment:
+      - domain=
+      - username=collabora
+      - password=
+    ports:
+      - 1001:9980
+    restart: always
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"

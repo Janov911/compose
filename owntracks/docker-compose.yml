@@ -1,0 +1,14 @@
+version: "3.6"
+services:
+  owntracks-recorder:
+    container_name: owntracks-recorder
+    image: owntracks/recorder
+    ports:
+      - 8083:8083
+    environment:
+      - OTR_PORT=0 # disables MQTT
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./owntracks-recorder/config:/config
+      - ./owntracks-recorder/store:/store
+    restart: unless-stopped

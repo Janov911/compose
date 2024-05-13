@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  linkding:
+    container_name: linkding
+    image: sissbruecker/linkding:latest
+    ports:
+      - 9009:9090
+    volumes:
+      - /../../linkding/data:/etc/linkding/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.linkding.entrypoints=https"
+      - "traefik.http.routers.linkding.rule=Host(``)"
+      - "traefik.http.routers.linkding.tls=true"
+      - "traefik.http.routers.linkding.tls.certresolver=cloudflare"
+    restart: unless-stopped
+networks:
+  default:
+    name: proxy
+    external: true

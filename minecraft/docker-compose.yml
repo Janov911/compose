@@ -1,0 +1,19 @@
+version: "3"
+services:
+  mc:
+    container_name: [whatever]
+    image: itzg/minecraft-bedrock-server
+    ports:
+      - 19132:19132/udp
+    environment:
+      EULA: "TRUE"
+      ALLOW_CHEATS: "true"
+      #  WHITE_LIST: "true"
+      GAMEMODE: creative
+      DEFAULT_PLAYER_PERMISSION_LEVEL: operator
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+    volumes:
+      # attach a directory relative to the directory containing this compose file
+      - ./minecraft-data:/data

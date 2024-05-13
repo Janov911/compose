@@ -1,0 +1,12 @@
+version: '3'
+services:
+  pinchflat:
+    image: keglin/pinchflat:latest
+    ports:
+      - '8945:8945'
+    volumes:
+      - /../../docker/pinch/config:/config
+      - /../../media/youtube:/downloads
+    environment:
+      - PUID=1000
+      - PGID=100

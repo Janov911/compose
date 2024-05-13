@@ -1,0 +1,27 @@
+### docker-compose.yml ###
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    environment:
+      - AUDIOBOOKSHELF_UID=99
+      - AUDIOBOOKSHELF_GID=100
+    networks:
+      - proxy
+    ports:
+      - 13378:80
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.audiobookshelf.entrypoints=https"
+#      - "traefik.http.routers.audiobookshelf.rule=Host(``)"
+#      - "traefik.http.routers.audiobookshelf.tls=true"
+#      - "traefik.http.routers.audiobookshelf.tls.certresolver=cloudflare"
+    volumes:
+      - ${BOOK_DIR}:/audiobooks
+      - ${POD_DIR}:/podcasts
+      - ${CONF_DIR}:/config
+      - ${META_DIR}:/metadata
+
+networks:
+  proxy:
+    external: true

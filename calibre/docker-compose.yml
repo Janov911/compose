@@ -1,0 +1,31 @@
+---
+version: "2.1"
+services:
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web
+    container_name: calibre
+    environment:
+      - PUID=1000
+      - PGID=100
+      - TZ=Europe/Amsterdam
+      - DOCKER_MODS=ghcr.io/linuxserver/mods:universal-calibre #linuxserver/calibre-web:calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.calibre.entrypoints=https"
+#      - "traefik.http.routers.calibre.rule=Host(``)"
+#      - "traefik.http.routers.calibre.tls=true"
+#      - "traefik.http.routers.calibre.tls.certresolver=cloudflare"
+#      - "traefik.http.services.calibre.loadbalancer.server.port=8083"
+    volumes:
+      - ${CONF_DIR}:/config
+      - ${DATA_DIR}:/books
+    networks:
+      - proxy
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,10 @@
+version: '2.4'
+services:
+  whoogle-search:
+    image: benbusby/whoogle-search:latest
+    container_name: whoogle
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges
+    ports:
+      - 5000:5000
