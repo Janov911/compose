@@ -1,0 +1,29 @@
+---
+services:
+  ghost:
+    image: ghost:latest
+    environment:
+#      url: https://www.${DOMAIN?Variable not set}
+#      mail__transport: SMTP
+#      mail__options__host: ${MAIL_HOST?Variable not set}
+#      mail__options__port: ${MAIL_PORT?Variable not set}
+#      mail__options__auth__user: ${MAIL_USER?Variable not set}
+#      mail__options__auth__pass: ${MAIL_PASS?Variable not set}
+#      mail__from: ${MAIL_FROM?Variable not set}
+      database__client: mysql
+      database__connection__host: mysqldbhost
+      database__connection__user: root
+      database__connection__password: 631i:&28&:supersecurep4sswo0rdhereCanBeRpelaceByYOu
+      database__connection__database: ghost
+    volumes:
+      - ./content:/var/lib/ghost/content
+			
+	db:
+    image: mysql:latest
+    restart: always
+    networks:
+      - default
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 631i:&28&:supersecurep4sswo0rdhereCanBeRpelaceByYOu
